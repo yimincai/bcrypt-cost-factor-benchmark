@@ -15,10 +15,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-var Reset = "\033[0m"
-var Red = "\033[31m"
-var Green = "\033[32m"
-var Yellow = "\033[33m"
 var src = rand.NewSource(time.Now().UnixNano())
 
 const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@_#"
@@ -44,17 +40,17 @@ func main() {
 		return
 	}
 
-	log.Printf(Yellow+"PASSWORD_LENGTH = %v"+Reset, lengthOfPassword)
+	log.Printf("PASSWORD_LENGTH = %v", lengthOfPassword)
 	fmt.Println("========================================================================================")
 	for cost := valStart; cost <= valEnd; cost++ {
 		password := RandString(lengthOfPassword)
-		log.Printf(Yellow+"COST FACTOR : %v%v\n", cost, Reset)
+		log.Printf("COST FACTOR : %v\n", cost)
 		Total(password, cost)
 		fmt.Println("========================================================================================")
 	}
 	forever := make(chan bool)
 
-	log.Printf(Red + "[*] Benchmark finished, to exit please press CTRL+C" + Reset)
+	log.Printf("[*] Benchmark finished, to exit please press CTRL+C")
 	<-forever
 }
 
@@ -116,5 +112,5 @@ func TimeTracker(start time.Time) {
 	runtimeFunc := regexp.MustCompile(`^.*\.(.*)$`)
 	name := runtimeFunc.ReplaceAllString(funcObj.Name(), "$1")
 
-	log.Printf("%s\ttook\t%s%s%s", name, Green, elapsed, Reset)
+	log.Printf("%s\ttook\t%s", name, elapsed)
 }
